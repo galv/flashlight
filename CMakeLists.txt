@@ -105,7 +105,8 @@ install(FILES ${CEREAL_SOURCE_DIR}/LICENSE ${CEREAL_SOURCE_DIR}/README.md
 # which all required dependencies are found.
 
 if (FLASHLIGHT_USE_CUDA)
-   find_package(CUDA 9.2 QUIET) # CUDA 9.2 is required for >= ArrayFire 3.6.1
+  find_package(CUDA 9.1 QUIET) # CUDA 7.0 minimum is required for >= ArrayFire 3.6.1,
+                               # but I happen to be using 9.1
    if (CUDA_FOUND)
      message(STATUS "CUDA found (library: ${CUDA_LIBRARIES} include: ${CUDA_INCLUDE_DIRS})")
    else()
@@ -113,7 +114,7 @@ if (FLASHLIGHT_USE_CUDA)
      message(FATAL_ERROR "CUDA required to build CUDA backend")
    endif()
 
-   find_package(CUDNN 7.1 QUIET) # CUDNN 7.1 works with CUDA 9.2
+   find_package(CUDNN 7.1 QUIET) # CUDNN 7.1 works with CUDA 9.1
    if (CUDNN_FOUND)
      message(STATUS "CUDNN found (library: ${CUDNN_LIBRARIES} include: ${CUDNN_INCLUDE_DIRS})")
    else()
