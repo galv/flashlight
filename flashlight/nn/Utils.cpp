@@ -11,6 +11,8 @@
 #include "flashlight/autograd/Utils.h"
 #include "flashlight/common/Utils.h"
 
+#include <array>
+
 namespace fl {
 
 bool allParamsClose(

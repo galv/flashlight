@@ -17,7 +17,9 @@
 #include <gloo/allreduce_halving_doubling.h>
 #include <gloo/config.h>
 #include <gloo/mpi/context.h>
+#if !defined(__APPLE__)
 #include <gloo/transport/tcp/device.h>
+#endif
 #include <mpi.h>
 
 #include "flashlight/common/CppBackports.h"
@@ -88,12 +90,16 @@ void distributedInit(
     return;
   }
   // TODO: ibverbs support.
+#if !defined(__APPLE__)
   auto glooDev = gloo::transport::tcp::CreateDevice("");
+#endif
 
   // Create Gloo context from MPI communicator
   glooContext_ = gloo::mpi::Context::createManaged();
   glooContext_->setTimeout(gloo::kNoTimeout);
+#if !defined(__APPLE__)
   glooContext_->connectFullMesh(glooDev);
+#endif
 
   detail::DistributedInfo::getInstance().backend_ = DistributedBackend::GLOO;
   detail::DistributedInfo::getInstance().isInitialized_ = true;
